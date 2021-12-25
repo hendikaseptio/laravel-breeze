@@ -8,6 +8,10 @@ use App\Models\Bus;
 
 class BusController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +49,6 @@ class BusController extends Controller
             'seat' => $request->seat,
             'price' => $request->price,
         ]; 
-        var_dump($data);     
         Bus::Create($data);
         return redirect('/bus')->with('status');
     }
@@ -69,7 +72,8 @@ class BusController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Bus::findOrFail($id);
+        return view('admin.bus.edit',compact('data'));
     }
 
     /**
@@ -79,9 +83,17 @@ class BusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BusRequest $request, $id)
     {
-        //
+        $request->authorize();
+        $data = [
+            'plate_number' => $request->plate_number,
+            'brand' => $request->brand,
+            'seat' => $request->seat,
+            'price' => $request->price,
+        ]; 
+        Bus::Find($id)->Update($data);
+        return redirect('/bus')->with('status');
     }
 
     /**
@@ -92,6 +104,7 @@ class BusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Bus::Destroy($id);
+        return redirect('/bus')->with('status');
     }
 }

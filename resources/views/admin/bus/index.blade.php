@@ -36,12 +36,14 @@
                                 <td class="p-2 border border-gray-300">$ {{$b->price}}</td>
                                 <td class="p-2 border border-gray-300">
                                     <div class="flex justify-center">
-                                    <x-button-link href="#" class="ml-3"><i class="mr-1 bi bi-pencil"></i> 
+                                    <x-button-link href="{{ route('bus.edit',$b->id) }}" class="ml-3"><i class="mr-1 bi bi-pencil"></i> 
                                         {{ __('Edit') }}
                                     </x-button-link >
-                                    <x-button-link href="#" class="ml-3"><i class="mr-1 bi bi-trash"></i> 
-                                        {{ __('Delete') }}
-                                    </x-button-link >
+                                    <form action="{{ route('bus.destroy',$b->id) }}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <x-button type="submit" class="ml-2"><i class="mr-1 bi bi-trash"></i> Delete</x-button>
+                                    </form>
                                     </div>
                                 </td>
                             </tr>
