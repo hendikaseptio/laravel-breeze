@@ -11,5 +11,6 @@
 - Delete data Bus
 - API Controller Bus
 - Resource Bus
-- Web Routes for Bus
-- Api Routes for Bus
+- Web Routes for data Bus
+- API Routes for data Bus
+- API Authentication with sanctum 

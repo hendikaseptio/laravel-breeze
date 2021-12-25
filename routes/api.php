@@ -17,6 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resources([
-    'BusAPI' => 'API\BusController',
-]);
+
+//API route for register new user
+Route::post('/register', 'API\AuthController@register');
+
+//API route for login user
+Route::post('/login', 'API\AuthController@login');
+
+//Protecting Routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    // API route for logout user
+    Route::post('/logout', 'API\AuthController@logout');
+    Route::resource(
+        'BusAPI', 'API\BusController',
+    );
+});
